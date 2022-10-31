@@ -1,0 +1,43 @@
+<%= form_with(model: user, url: user_form_url, local: true) do |form| %>
+  <% if user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= user.errors.count %>件のエラーがあります</h2>
+
+      <ul>
+        <% user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.text_field :email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password %>
+    <%= form.password_field :password %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password_confirmation %>
+    <%= form.password_field :password_confirmation %>
+  </div>
+
+  <div class="field">
+    <%= form.label :admin %>
+    <%= form.check_box :admin %>
+  </div>
+
+  <div class="actions">
+    <% user_button_id = controller.action_name == "new" ? "create-user" : "update-user" %>
+    <%= form.submit id: user_button_id %>
+  </div>
+<% end %>

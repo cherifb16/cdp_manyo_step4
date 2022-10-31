@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CdpWebManyoTask</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <% if logged_in? %>
+      <p><strong><%= "🟠" if current_user.admin? %> <%= current_user.name %></strong>さんでログイン中</p>
+    <% end %>
+    <ul>
+      <% if logged_in? %>
+        <% if current_user.admin? %>
+          <li><%= link_to "ユーザ一覧", admin_users_path, id: "users-index" %></li>
+          <li><%= link_to "ユーザを登録する", new_admin_user_path, id: "add-user" %></li>
+        <% end %>
+        <li><%= link_to t('nav.tasks_index'), tasks_path, id: "tasks-index" %></li>
+        <li><%= link_to t('nav.new_task'), new_task_path, id: "new-task" %></li>
+        <li><%= link_to "アカウント詳細", user_path(current_user.id), id: "my-account" %></li>
+        <li><%= link_to "ログアウト", session_path(current_user.id), method: :delete, id: 'sign-out' %></li>
+      <% else %>
+        <li><%= link_to "アカウント登録", new_user_path, id: "sign-up" %></li>
+        <li><%= link_to "ログイン", new_session_path, id: "sign-in" %></li>
+      <% end %>
+    </ul>
+    <%= yield %>
+  </body>
+</html>
